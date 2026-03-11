@@ -6,6 +6,7 @@ import com.sky.entity.ShoppingCart;
 import java.util.List;
 
 public interface ShoppingCartService {
+
     /**
      * 添加购物车
      * @param shoppingCartDTO
@@ -19,7 +20,7 @@ public interface ShoppingCartService {
     List<ShoppingCart> showShoppingCart();
 
     /**
-     * 清空购物车商品
+     * 清空购物车
      */
     void cleanShoppingCart();
 

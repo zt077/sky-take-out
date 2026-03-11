@@ -4,10 +4,10 @@ import com.sky.vo.BusinessDataVO;
 import com.sky.vo.DishOverViewVO;
 import com.sky.vo.OrderOverViewVO;
 import com.sky.vo.SetmealOverViewVO;
-
 import java.time.LocalDateTime;
 
 public interface WorkspaceService {
+
     /**
      * 根据时间段统计营业数据
      * @param begin
@@ -33,4 +33,5 @@ public interface WorkspaceService {
      * @return
      */
     SetmealOverViewVO getSetmealOverView();
+
 }

@@ -11,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,12 +29,13 @@ public class SetmealController {
 
     /**
      * 新增套餐
+     *
      * @param setmealDTO
      * @return
      */
     @PostMapping
     @ApiOperation("新增套餐")
-    @CacheEvict(cacheNames = "setmealCache",key = "#setmealDTO.categoryId")
+    @CacheEvict(cacheNames = "setmealCache",key = "#setmealDTO.categoryId")//key: setmealCache::100
     public Result save(@RequestBody SetmealDTO setmealDTO) {
         setmealService.saveWithDish(setmealDTO);
         return Result.success();
@@ -43,6 +43,7 @@ public class SetmealController {
 
     /**
      * 分页查询
+     *
      * @param setmealPageQueryDTO
      * @return
      */
@@ -55,6 +56,7 @@ public class SetmealController {
 
     /**
      * 批量删除套餐
+     *
      * @param ids
      * @return
      */
@@ -67,7 +69,8 @@ public class SetmealController {
     }
 
     /**
-     * 根据id查询套餐
+     * 根据id查询套餐，用于修改页面回显数据
+     *
      * @param id
      * @return
      */
@@ -80,6 +83,7 @@ public class SetmealController {
 
     /**
      * 修改套餐
+     *
      * @param setmealDTO
      * @return
      */
@@ -93,6 +97,7 @@ public class SetmealController {
 
     /**
      * 套餐起售停售
+     *
      * @param status
      * @param id
      * @return

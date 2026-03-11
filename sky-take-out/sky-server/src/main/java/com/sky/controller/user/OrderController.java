@@ -14,13 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 订单
- */
 @RestController("userOrderController")
 @RequestMapping("/user/order")
+@Api(tags = "用户端订单相关接口")
 @Slf4j
-@Api(tags = "C端-订单接口")
 public class OrderController {
 
     @Autowired
@@ -33,8 +30,8 @@ public class OrderController {
      */
     @PostMapping("/submit")
     @ApiOperation("用户下单")
-    public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO ordersSubmitDTO) {
-        log.info("用户下单：{}", ordersSubmitDTO);
+    public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO ordersSubmitDTO){
+        log.info("用户下单，参数为：{}",ordersSubmitDTO);
         OrderSubmitVO orderSubmitVO = orderService.submitOrder(ordersSubmitDTO);
         return Result.success(orderSubmitVO);
     }
@@ -57,20 +54,21 @@ public class OrderController {
     /**
      * 历史订单查询
      *
-     * @param pageNum
+     * @param page
      * @param pageSize
      * @param status   订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
      * @return
      */
-    @GetMapping("historyOrders")
+    @GetMapping("/historyOrders")
     @ApiOperation("历史订单查询")
-    public Result<PageResult> page(int pageNum, int pageSize, Integer status) {
-        PageResult pageResult=orderService.pageQueryForUser(pageNum, pageSize, status);
+    public Result<PageResult> page(int page, int pageSize, Integer status) {
+        PageResult pageResult = orderService.pageQuery4User(page, pageSize, status);
         return Result.success(pageResult);
     }
 
     /**
      * 查询订单详情
+     *
      * @param id
      * @return
      */
@@ -83,18 +81,19 @@ public class OrderController {
 
     /**
      * 用户取消订单
-     * @param id
+     *
      * @return
      */
     @PutMapping("/cancel/{id}")
-    @ApiOperation("用户取消订单")
-    public Result cancel(@PathVariable Long id) throws Exception {
+    @ApiOperation("取消订单")
+    public Result cancel(@PathVariable("id") Long id) throws Exception {
         orderService.userCancelById(id);
         return Result.success();
     }
 
     /**
      * 再来一单
+     *
      * @param id
      * @return
      */
@@ -106,14 +105,13 @@ public class OrderController {
     }
 
     /**
-     * 用户催单
-     *
+     * 客户催单
      * @param id
      * @return
      */
     @GetMapping("/reminder/{id}")
-    @ApiOperation("用户催单")
-    public Result reminder(@PathVariable("id") Long id) {
+    @ApiOperation("客户催单")
+    public Result reminder(@PathVariable("id") Long id){
         orderService.reminder(id);
         return Result.success();
     }
